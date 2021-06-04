@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)     
 library(lubridate)     
 library(ggthemes)      
-theme_set(theme_minimal()) 
+theme_set(theme_minimal())
 ```
 
 ### Read in Data 
