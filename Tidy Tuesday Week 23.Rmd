@@ -1,0 +1,48 @@
+---
+title: "Tidy Tueday Week 23"
+author: "Talia"
+date: "6/9/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE, message=FALSE, warning=FALSE)
+```
+
+```{r libraries}
+library(tidyverse)     
+library(lubridate)     
+library(ggthemes)      
+theme_set(theme_minimal())
+```
+
+## Load the Data
+
+```{r}
+fishing <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-08/fishing.csv')
+stocked <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-08/stocked.csv')
+```
+
+
+## Data Visualization
+
+```{r}
+stocked %>%
+  filter(SPECIES %in% c("BKT", "BNT", "LAT", "RBT")) %>% 
+  group_by(SPECIES, YEAR) %>%
+  summarize(total_stocked = sum(NO_STOCKED)) %>% 
+  ggplot(mapping = aes(x = YEAR, 
+                       y = total_stocked, 
+                       color = SPECIES)) +
+  geom_line() +
+  scale_y_continuous(labels = scales::comma) + 
+  scale_color_discrete(name = "species", 
+                       labels = c("Brook Trout", 
+                                  "Brown Trout", 
+                                  "Lake Trout", 
+                                  "Rainbow Trout")) + 
+  labs(x = NULL, 
+       y = NULL,
+       title = "Total Trout Stocked in the Great Lakes Over the Years",
+       caption = "Plot created by Talia Chait, data from Great Lakes Fishing Commission")
+```
