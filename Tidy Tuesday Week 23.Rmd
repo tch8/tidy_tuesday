@@ -44,5 +44,5 @@ stocked %>%
   labs(x = NULL, 
        y = NULL,
        title = "Total Trout Stocked in the Great Lakes Over the Years",
-       caption = "Plot created by Talia Chait, data from Great Lakes Fishing Commission")
+       caption = "Plot created by Talia, data from Great Lakes Fishing Commission")
 ```
