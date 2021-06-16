@@ -1,6 +1,6 @@
 # tidy_tuesday 
 ### [Week 25](https://github.com/tch8/tidy_tuesday/blob/main/Tidy%20Tuesday%20Week%2025.Rmd)
-
+Re-creation of W.E.B. DuBois Graphs about Conjugal Conditions 
 ![week251](https://user-images.githubusercontent.com/85037863/122248729-469c5980-ce96-11eb-8d75-6ec52ea85f1b.png)
 
 
