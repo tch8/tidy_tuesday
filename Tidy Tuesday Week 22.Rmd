@@ -1,5 +1,5 @@
 ---
-title: "Tidy Tuesday Week 21"
+title: "Tidy Tuesday Week 22"
 author: "Talia"
 date: "6/4/2021"
 output: 
