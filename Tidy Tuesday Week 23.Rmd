@@ -1,8 +1,11 @@
 ---
-title: "Tidy Tueday Week 23"
+title: 'Tidy Tuesday #2'
 author: "Talia"
-date: "6/9/2021"
-output: html_document
+output: 
+  html_document:
+    df_print: paged
+    code_download: true
+    theme: cerulean
 ---
 
 ```{r setup, include=FALSE}
@@ -11,38 +14,37 @@ knitr::opts_chunk$set(echo = TRUE, error=TRUE, message=FALSE, warning=FALSE)
 
 ```{r libraries}
 library(tidyverse)     
-library(lubridate)     
-library(ggthemes)      
+library(lubridate)    
+library(ggthemes)     
 theme_set(theme_minimal())
 ```
 
-## Load the Data
-
 ```{r}
-fishing <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-08/fishing.csv')
-stocked <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-08/stocked.csv')
+# Read in the data for the week
+summary <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-01/summary.csv')
+challenges <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-01/challenges.csv')
+castaways <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-01/castaways.csv')
+viewers <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-01/viewers.csv')
+jury_votes <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-01/jury_votes.csv')
 ```
 
+This week's data is about the TV show Survivor. Read more about it, including definitions of variables, [here](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-06-01/readme.md). PLEASE take a moment to read the message at the top about alt text. 
 
-## Data Visualization
+## Graph 
 
 ```{r}
-stocked %>%
-  filter(SPECIES %in% c("BKT", "BNT", "LAT", "RBT")) %>% 
-  group_by(SPECIES, YEAR) %>%
-  summarize(total_stocked = sum(NO_STOCKED)) %>% 
-  ggplot(mapping = aes(x = YEAR, 
-                       y = total_stocked, 
-                       color = SPECIES)) +
-  geom_line() +
-  scale_y_continuous(labels = scales::comma) + 
-  scale_color_discrete(name = "species", 
-                       labels = c("Brook Trout", 
-                                  "Brown Trout", 
-                                  "Lake Trout", 
-                                  "Rainbow Trout")) + 
+challenges %>%
+  filter(season == 40) %>%
+  group_by(winners) %>%
+  summarise(nwins = n()) %>%
+  ggplot(mapping = aes(x = reorder(winners, nwins), 
+                       y = nwins, 
+                       fill = nwins)) + 
+  geom_col() +
+  theme(legend.position = "none") + 
   labs(x = NULL, 
-       y = NULL,
-       title = "Total Trout Stocked in the Great Lakes Over the Years",
-       caption = "Plot created by Talia, data from Great Lakes Fishing Commission")
+       y = NULL, 
+       title = "Cumulative Times Each Player Won in Season 40 of Survivor", 
+       caption = "Plot created by Talia, data from Challenges") + 
+  coord_flip()
 ```

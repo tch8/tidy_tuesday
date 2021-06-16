@@ -1,50 +1,57 @@
 ---
-title: 'Tidy Tuesday #2'
+title: "Tidy Tuesday Week 21"
 author: "Talia"
+date: "6/4/2021"
 output: 
-  html_document:
+ html_document:
     df_print: paged
     code_download: true
     theme: cerulean
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, error=TRUE, message=FALSE, warning=FALSE)
+knitr::opts_chunk$set(echo = TRUE)
 ```
+
 
 ```{r libraries}
 library(tidyverse)     
-library(lubridate)    
-library(ggthemes)     
-theme_set(theme_minimal()) 
+library(lubridate)     
+library(ggthemes)      
+theme_set(theme_minimal())
 ```
 
+### Read in Data 
 ```{r}
-# Read in the data for the week
-summary <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-01/summary.csv')
-challenges <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-01/challenges.csv')
-castaways <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-01/castaways.csv')
-viewers <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-01/viewers.csv')
-jury_votes <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-01/jury_votes.csv')
+records <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-05-25/records.csv')
+drivers <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-05-25/drivers.csv')
 ```
 
-This week's data is about the TV show Survivor. Read more about it, including definitions of variables, [here](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-06-01/readme.md). PLEASE take a moment to read the message at the top about alt text. 
-
-## Graph 
+### Filter the Data
 
 ```{r}
-challenges %>%
-  filter(season == 40) %>%
-  group_by(winners) %>%
-  summarise(nwins = n()) %>%
-  ggplot(mapping = aes(x = reorder(winners, nwins), 
-                       y = nwins, 
-                       fill = nwins)) + 
-  geom_col() +
-  theme(legend.position = "none") + 
-  labs(x = NULL, 
-       y = NULL, 
-       title = "Cumulative Times Each Player Won in Season 40 of Survivor", 
-       caption = "Plot created by Talia, data from Challenges") + 
-  coord_flip()
+records_filtered <- records %>% 
+  filter(type == "Three Lap", shortcut == "No") %>%
+  group_by(track, system_played) %>%
+  summarise(recordtime = min(time, na.rm = TRUE))
+```
+
+
+### Data Visualization
+
+**Research question: Which track is the fastest during a three lap, no shortcuts race?**
+
+```{r}
+records_filtered %>%
+  ggplot(mapping = 
+           aes(x = recordtime, y = track, fill = system_played)) +
+  geom_col(position = "dodge") + 
+  xlab("Record Minimum Time") + 
+  labs(fill = "System Played", 
+       title = "Record Time by Track for Mario Kart 64", 
+       y= NULL, 
+       subtitle = "Record times are Three Lap and No Shortcuts", 
+       caption = "Plot created by Talia, data from Mario Cart World Records") +
+  scale_x_continuous(expand = c(0,0)) +
+  theme_minimal()
 ```

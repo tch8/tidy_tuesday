@@ -1,0 +1,77 @@
+---
+title: "Tidy Tuesday Week 25"
+author: "Talia C"
+output: 
+  html_document:
+    df_print: paged
+    code_download: true
+    theme: cerulean
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE, message=FALSE, warning=FALSE)
+```
+
+```{r libraries}
+library(tidyverse)     
+library(lubridate)     
+library(ggthemes)      
+theme_set(theme_minimal()) 
+```
+
+```{r}
+# Read in the tweets data for the week - this is choice #1
+
+tweets <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-15/tweets.csv')
+```
+
+If you choose to replicate a graph, read in the data this way:
+
+```{r}
+# Read in the data for the week
+georgia_pop <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-16/georgia_pop.csv')
+census <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-16/census.csv')
+furniture <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-16/furniture.csv')
+city_rural <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-16/city_rural.csv')
+income <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-16/income.csv')
+freed_slaves <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-16/freed_slaves.csv')
+occupation <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-16/occupation.csv')
+conjugal <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-16/conjugal.csv')
+```
+
+This week's data is about the W.E.B DuBois challenge which was held earlier this year. You have two choices today: 1. You can analyze the tweet data for this week. 2. Try to replicate one of W.E.B. DuBois's graphs. 
+
+For choice #1, read more about the data, including definitions of variables, [here](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-06-15/readme.md). 
+
+```{r}
+
+```
+
+For choice #2, you will attempt to recreate visualizations made by W.E.B. DuBois for the 1900 Paris Exposition.
+
+```{r}
+#pivot data to be longer 
+conjugal_long <- conjugal %>% 
+  pivot_longer(cols = c("Single", "Married", "Divorced and Widowed"),
+               names_to = "marriagestatus",
+               values_to = "proportion")
+
+#replicating W.E.B. DuBois Graph
+conjugal_long %>% 
+  ggplot(mapping = aes(x = proportion,
+                       y = fct_relevel(Population, levels = c("Negroes", "Germany")), 
+                       fill = marriagestatus)) +
+  geom_col(position = "stack") + 
+  facet_wrap(vars(Age), 
+             ncol = 1) + 
+  theme(legend.position = "top",
+        plot.background = element_rect(fill = "#E5D5C5"),
+        plot.title = element_text(family = "mono", hjust = 0.5),
+        panel.grid = element_blank())+
+  scale_fill_manual(values = c("#537763", "#FFBE03", "#E73150")) +
+  labs(x = "", 
+       y = "", 
+       title = "CONJUGAL CONDITIONS",
+       fill = "",
+       caption = "Plot created by Talia C, data from W.E.B. DuBois")
+```
