@@ -45,7 +45,26 @@ This week's data is about the W.E.B DuBois challenge which was held earlier this
 For choice #1, read more about the data, including definitions of variables, [here](https://github.com/rfordatascience/tidytuesday/blob/master/data/2021/2021-06-15/readme.md). 
 
 ```{r}
-
+tweets %>% 
+  mutate(date = date(datetime)) %>%
+  group_by(date) %>% 
+  summarize(ntweets = n(),
+            verified) %>% 
+  filter(!is.na(verified)) %>% 
+  ggplot(mapping = aes(x = date,
+                       y = ntweets,
+                       color = verified)) + 
+  geom_line(lwd = 0.75) + 
+  theme_classic() +
+  theme(plot.title.position = "plot",
+        plot.caption.position = "plot",
+        plot.title = element_text(family = "mono")) +
+  scale_color_manual(values = c("deepskyblue3", "goldenrod3")) +
+  labs(x = "", 
+       y = "", 
+       title = "TOTAL TWEETS OVER TIME",
+       color = "Verified",
+       caption = "Plot created by Talia C, data from Tweets")
 ```
 
 For choice #2, you will attempt to recreate visualizations made by W.E.B. DuBois for the 1900 Paris Exposition.
