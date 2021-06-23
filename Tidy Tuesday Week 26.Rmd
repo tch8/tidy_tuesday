@@ -22,7 +22,7 @@ library(ggtext)
 theme_set(theme_minimal()) 
 ```
 
-## Read in Data 
+## Read in Data
 ```{r}
 parks <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-22/parks.csv')
 ```
