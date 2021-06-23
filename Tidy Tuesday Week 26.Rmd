@@ -50,7 +50,7 @@ parks %>%
   labs(x = "",
        y = "",
        title = "Park Rank of Top 10 Most Populous Cities from **<span style = 'color: chartreuse3;'>2019</span>** to **<span style = 'color: dodgerblue2;'>2020</span>**",
-       caption = "Plot by Talia Chait, data from Parks") +
+       caption = "Plot by Talia, data from Parks") +
   theme(plot.title.position = "plot", 
         plot.title = element_markdown())
 ```
