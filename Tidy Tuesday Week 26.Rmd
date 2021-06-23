@@ -1,0 +1,59 @@
+---
+title: "Tidy Tuesday Week 26"
+author: "Talia"
+date: "6/23/2021"
+output: 
+  html_document:
+    df_print: paged
+    code_download: true
+    theme: cerulean
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE, message=FALSE, warning=FALSE)
+```
+
+```{r libraries}
+library(tidyverse)     
+library(lubridate)     
+library(ggthemes)      
+library(ggalt)
+library(ggtext)
+theme_set(theme_minimal()) 
+```
+
+## Read in Data 
+```{r}
+parks <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-22/parks.csv')
+```
+
+
+## Visualization of Data
+```{r}
+parks %>% 
+  filter(year %in% c(2020, 2019)) %>% 
+  select(year, rank, city) %>%
+  filter(city %in% c("New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "Philadelphia", "San Antonio", "San Diego", "Dallas", "San Jose")) %>% 
+  pivot_wider(id_cols = city, 
+              names_from = year, 
+              values_from = rank) %>%
+  ggplot() + 
+  geom_dumbbell(aes(y = fct_rev(fct_reorder(city, `2020`)),
+                    x = `2019`, 
+                    xend = `2020`),
+                size = 1.5, 
+                color = "#b2b2b2", 
+                size_x = 3, 
+                size_xend = 3, 
+                colour_x = "2019", 
+                colour_xend = "2020") +
+  labs(x = "",
+       y = "",
+       title = "Park Rank of Top 10 Most Populous Cities from **<span style = 'color: chartreuse3;'>2019</span>** to **<span style = 'color: dodgerblue2;'>2020</span>**",
+       caption = "Plot by Talia Chait, data from Parks") +
+  theme(plot.title.position = "plot", 
+        plot.title = element_markdown())
+```
+
+
+
