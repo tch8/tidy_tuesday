@@ -46,16 +46,3 @@ animal_rescues %>%
         panel.grid.major.x = element_blank(),
         panel.grid.minor.x  = element_blank())
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-\
