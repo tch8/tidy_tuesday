@@ -15,7 +15,7 @@ library(lubridate)
 library(ggthemes)      
 library(ggalt)
 library(ggtext)
-theme_set(theme_minimal()) 
+theme_set(theme_minimal())
 ```
 
 
