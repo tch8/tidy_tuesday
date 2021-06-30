@@ -1,0 +1,61 @@
+---
+title: "Tidy Tuesday Week 27"
+author: "Talia"
+date: "6/30/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, error=TRUE, message=FALSE, warning=FALSE)
+```
+
+```{r libraries}
+library(tidyverse)     
+library(lubridate)     
+library(ggthemes)      
+library(ggalt)
+library(ggtext)
+theme_set(theme_minimal()) 
+```
+
+
+```{r}
+animal_rescues <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-06-29/animal_rescues.csv')
+```
+
+
+
+```{r}
+janitor::clean_names(animal_rescues)
+
+animal_rescues %>% 
+  filter(animal_group_parent %in% c("Fox", "Cat", "Dog", "Bird")) %>% 
+  group_by(animal_group_parent, cal_year) %>% 
+  summarize(n = n()) %>% 
+  ggplot(aes(y = n,
+             x = cal_year,
+             color = animal_group_parent)) +
+  geom_line() +
+  labs(x = "",
+       y = "",
+       title = "Number of Rescues from 2009 to 2021",
+       color = "Animal Group",
+       caption = "Plot created by Talia, Data from Animal Rescues") +
+  theme(plot.title.position = "plot",
+        plot.caption.position = "plot",
+        panel.grid.major.x = element_blank(),
+        panel.grid.minor.x  = element_blank())
+```
+
+
+
+
+
+
+
+
+
+
+
+
+\
