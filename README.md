@@ -1,4 +1,9 @@
 # tidy_tuesday 
+### [Week 26](https://github.com/tch8/tidy_tuesday/blob/main/Tidy%20Tuesday%20Week%2026.Rmd)
+
+![week26](https://user-images.githubusercontent.com/85037863/123175119-3c0e3100-d44f-11eb-84ad-1345b04f077f.png)
+
+
 ### [Week 25](https://github.com/tch8/tidy_tuesday/blob/main/Tidy%20Tuesday%20Week%2025.Rmd)
 Re-creation of W.E.B. DuBois Graphs about Conjugal Conditions 
 
