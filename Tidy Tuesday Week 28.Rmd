@@ -57,7 +57,9 @@ holidays %>%
   theme(plot.title.position = "plot",
         plot.title = element_markdown(family = "mono"),
         plot.subtitle = element_markdown(family = "mono"),
-        legend.position = "none")
+        legend.position = "none",
+        panel.grid.minor = element_blank(),
+        panel.grid.major.y = element_blank())
 ```
 
 
