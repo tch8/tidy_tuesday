@@ -1,5 +1,15 @@
 # tidy_tuesday 
 
+### [Week 29](https://github.com/tch8/tidy_tuesday/blob/main/Tidy%20Tuesday%20Week%2029.Rmd)
+
+![week29](https://user-images.githubusercontent.com/85037863/125542069-136298bc-f519-4a66-b3b8-c9d1ac46ea42.png)
+
+
+### [Week 28](https://github.com/tch8/tidy_tuesday/blob/main/Tidy%20Tuesday%20Week%2028.Rmd)
+
+![week28](https://user-images.githubusercontent.com/85037863/125542043-69bf95b7-09c3-4e68-9db2-5edc01506e81.png)
+
+
 ### [Week 27](https://github.com/tch8/tidy_tuesday/blob/main/Tidy%20Tuesday%20Week%2027.Rmd)
 
 ![week27](https://user-images.githubusercontent.com/85037863/124025532-8d25a400-d9be-11eb-8148-329e23f75999.png)
