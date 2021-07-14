@@ -1,0 +1,73 @@
+---
+title: "Tidy Tuesday Week 28"
+author: "Talia"
+date: "7/7/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)     
+library(lubridate)     
+library(ggthemes)      
+library(ggalt)
+library(ggtext)
+library(lubridate)
+library(waffle)
+theme_set(theme_minimal())
+```
+
+```{r}
+holidays <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-07-06/holidays.csv')
+```
+
+```{r}
+holidays %>% 
+  mutate(independence_from = recode_factor(independence_from, "Russian Soviet Federative Socialist Republic" = "Soviet Union"),
+         independence_from = recode_factor(independence_from, "Russian Soviet Federative Socialist Republic and German Empire" = "Soviet Union"),
+         independence_from = recode_factor(independence_from, "Spanish Empire" = "Spain"),
+         independence_from = recode_factor(independence_from, "United Kingdom of Great Britain" = "United Kingdom"),
+         independence_from = recode_factor(independence_from, "Kingdom of Great Britain" = "United Kingdom"),
+         independence_from = recode_factor(independence_from, "United Kingdom of Great Britain and Ireland" = "United Kingdom"),
+         independence_from = 
+           recode_factor(independence_from, "United Kingdom of Portugal, Brazil and the Algarves" = "Portugal"),
+         independence_from = recode_factor(independence_from, "United Kingdom and the British Mandate for Palestine" = "United Kingdom"),
+         independence_from = recode_factor(independence_from, "Empire of Japan and France" = "Empire of Japan"),
+         independence_from = recode_factor(independence_from, "Spanish Empire[72]" = "Spain"),
+         independence_from = recode_factor(independence_from, "Soviet Union[80]" = "Soviet Union"),
+         independence_from = recode_factor(independence_from, "Soviet Union[55]" = "Soviet Union")) %>%
+  mutate(across(independence_from, fct_explicit_na, "What's independence?")) %>% 
+  filter(independence_from %in% c("Soviet Union", "Spain", "United Kingdom")) %>% 
+  group_by(independence_from, weekday) %>% 
+  summarize(ncountries = n()) %>% 
+  ggplot(mapping = aes(x = fct_reorder(weekday, ncountries, sum, .desc = FALSE), 
+                       y = ncountries, 
+                       fill = independence_from)) + 
+  geom_col() +
+  coord_flip() +
+  scale_fill_manual(values = c("#C60000", "#F7BE00", "#002066")) +
+  labs(x = "",
+       y = "",
+       title = "**<span style='font-size:11pt'> Number of Countries who Gained Independence**",
+       subtitle = "**From <span style='color:#002066;'>United Kingdom</span>, <span style='color: #F7BE00;'>Spain</span>, and <span style = 'color: #C60000;'>Soviet Union</span> Per Weekday**",
+       caption = "Plot created by Talia, data from Wikipedia") +
+  theme(plot.title.position = "plot",
+        plot.title = element_markdown(family = "mono"),
+        plot.subtitle = element_markdown(family = "mono"),
+        legend.position = "none")
+```
+
+
+
+
+
+
+
+
+
+
+
+
