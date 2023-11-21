@@ -1,0 +1,48 @@
+---
+title: "Tidy Tuesday Week 43"
+author: "Talia"
+date: "10/19/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r libraries}
+library(tidyverse)     
+library(lubridate)
+library(dplyr)
+library(ggthemes) 
+library(ggmap)         # for mapping points on map
+theme_set(theme_classic())
+```
+
+## Read in Data
+
+```{r pressure, echo=FALSE}
+pumpkins <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-10-19/pumpkins.csv')
+```
+
+## Filter and tidy data 
+
+```{r}
+pumpkins_filter <- pumpkins %>% 
+  filter(country == "United States") %>%
+  mutate(weight_lbs = as.numeric(weight_lbs)) %>% 
+  separate(id, c('year', 'type')) %>% 
+  count(type)
+
+pumpkins_filter %>%
+  mutate(type = recode(type, "F" = "Field Pumpkin", "P" = "Giant Pumpkin", "S" = "Giant Squash", "W" = "Giant Watermelon", "L" = "Long Gourd", "T" = "Tomato")) %>% 
+  ggplot(mapping = aes(x = type, y = n)) +
+  geom_col(fill = "orange") +
+  coord_flip() + 
+  labs(x = "",
+       y = "", 
+       title = "IT'S HALLOWEEN SEASON!",
+       subtitle = "Number of Pumpkins for Each type of Pumpkin") +
+  theme(plot.title.position = "plot",
+        plot.caption.position = "plot")
+```
+

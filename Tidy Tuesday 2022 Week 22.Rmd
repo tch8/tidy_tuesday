@@ -1,0 +1,68 @@
+---
+title: "Tidy Tuesday 2022 Week 22"
+author: "Talia"
+date: "5/31/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r libraries}
+library(tidyverse)     
+library(lubridate)
+library(dplyr)
+library(ggthemes) 
+library(ggmap)         # for mapping points on map
+theme_set(theme_classic())
+```
+
+## Load Data
+
+```{r}
+poll <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-05-31/poll.csv')
+reputation <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-05-31/reputation.csv')
+```
+
+
+## Filter Data 
+
+```{r}
+poll1 <- poll %>% 
+  filter(company %in% c("Apple", "Amazon.com", "Facebook", "Netflix", "Google"))
+
+reputation1 <- reputation %>% 
+  filter(company %in% c("Apple", "Amazon.com", "Facebook", "Netflix", "Google"))
+```
+
+## Visualization of Data 
+
+```{r}
+poll1_mr <- poll1 %>% 
+  filter(year == max(year))
+
+poll1 %>% 
+  ggplot(mapping = aes(x = year, 
+                       y = rank, 
+                       color = company)) + 
+  geom_line() +
+  geom_text(data = poll1_mr,
+            aes(label = company, family = "mono"),
+            hjust = "inward",
+            angle = -2) +
+  theme(legend.position = "none") + 
+  labs(x = NULL, 
+       y = NULL)
+
+reputation1 %>% 
+  filter(name == "CULTURE") %>% 
+  ggplot(mapping = aes(y = score,
+                       x = company,
+                       fill = company)) +
+  geom_col() + 
+  theme(legend.position = "none") + 
+  labs(x = NULL, 
+       y = NULL)
+```
+
